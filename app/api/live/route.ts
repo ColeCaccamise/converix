@@ -28,6 +28,8 @@ interface StreamResponse {
 	data: TwitchStream[];
 }
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: Request) {
 	console.log('checking stream status');
 	console.log('request url:', request.url);
