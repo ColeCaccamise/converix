@@ -1,51 +1,8 @@
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
 import { Twitch, Twitter, Instagram, Youtube } from 'lucide-react';
 import TwitchStatus from '@/components/twitch-status';
 
 export default async function Home() {
-	async function getLiveData() {
-		const liveData = await fetch('http://localhost:3000/api/live', {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		});
-		const liveDataJson = (await liveData.json()) as {
-			isLive: boolean;
-			streamInfo: {
-				id: string;
-				user_id: string;
-				user_login: string;
-				user_name: string;
-				game_id: string;
-				game_name: string;
-				type: string;
-				title: string;
-				viewer_count: number;
-				started_at: string;
-				language: string;
-				thumbnail_url: string;
-				tags: string[];
-			} | null;
-		};
-
-		return liveDataJson;
-	}
-
-	const liveData = await getLiveData();
-	console.log('live data:', liveData);
-
-	const isLive = liveData.isLive;
-	const streamInfo = liveData.streamInfo;
-	const streamTitle = streamInfo?.title;
-	// const streamThumbnail = streamInfo?.thumbnail_url;
-	const streamStartedAt = streamInfo?.started_at;
-	// const streamViewerCount = streamInfo?.viewer_count;
-	// const streamLanguage = streamInfo?.language;
-	const streamGame = streamInfo?.game_name;
-	// const streamTags = streamInfo?.tags;
-
 	return (
 		<div className='min-h-screen bg-black text-white'>
 			{/* Header */}
