@@ -2,7 +2,49 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Twitch, Twitter, Instagram, Youtube } from 'lucide-react';
 
-export default function Home() {
+export default async function Home() {
+	async function getLiveData() {
+		const liveData = await fetch('http://localhost:3000/api/live', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+		const liveDataJson = (await liveData.json()) as {
+			isLive: boolean;
+			streamInfo: {
+				id: string;
+				user_id: string;
+				user_login: string;
+				user_name: string;
+				game_id: string;
+				game_name: string;
+				type: string;
+				title: string;
+				viewer_count: number;
+				started_at: string;
+				language: string;
+				thumbnail_url: string;
+				tags: string[];
+			} | null;
+		};
+
+		return liveDataJson;
+	}
+
+	const liveData = await getLiveData();
+	console.log('live data:', liveData);
+
+	const isLive = liveData.isLive;
+	const streamInfo = liveData.streamInfo;
+	const streamTitle = streamInfo?.title;
+	const streamThumbnail = streamInfo?.thumbnail_url;
+	const streamStartedAt = streamInfo?.started_at;
+	const streamViewerCount = streamInfo?.viewer_count;
+	const streamLanguage = streamInfo?.language;
+	const streamGame = streamInfo?.game_name;
+	const streamTags = streamInfo?.tags;
+
 	return (
 		<div className='min-h-screen bg-black text-white'>
 			{/* Header */}
@@ -39,17 +81,39 @@ export default function Home() {
 			<section className='container mx-auto px-4 py-20 text-center'>
 				<h1 className='text-5xl font-bold mb-6'>ConveriX Gaming</h1>
 				<p className='text-xl mb-8'>Your go-to channel for sports and gaming</p>
+
 				<Button asChild>
-					<Link
-						href='https://twitch.tv/converixgaming'
-						target='_blank'
-						rel='noopener noreferrer'
-						className='inline-flex items-center'
-					>
-						<Twitch className='mr-2' />
-						Watch Live on Twitch
-					</Link>
+					{isLive ? (
+						<Link
+							href='https://twitch.tv/converixgaming'
+							target='_blank'
+						>
+							<Twitch className='mr-2' />
+							Watch Live on Twitch
+						</Link>
+					) : (
+						<Link
+							href='https://twitch.tv/converixgaming'
+							target='_blank'
+						>
+							<Twitch className='mr-2' />
+							Follow on Twitch
+						</Link>
+					)}
 				</Button>
+
+				{isLive && (
+					<div className='flex flex-col items-center p-4 rounded-lg gap-2'>
+						<p className=' uppercase'>
+							Live
+							<span className='text-red-500 underline bold'>
+								{' '}
+								NOW
+							</span> playing <b>{streamGame}</b>!
+						</p>
+						<p className='text-sm'>{streamTitle}</p>
+					</div>
+				)}
 			</section>
 
 			{/* About Section */}
