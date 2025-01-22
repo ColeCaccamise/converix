@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Twitch, Twitter, Instagram, Youtube } from 'lucide-react';
+import TwitchStatus from '@/components/twitch-status';
 
 export default async function Home() {
 	async function getLiveData() {
@@ -82,54 +83,7 @@ export default async function Home() {
 				<h1 className='text-5xl font-bold mb-6'>ConveriX Gaming</h1>
 				<p className='text-xl mb-8'>Your go-to channel for sports and gaming</p>
 
-				<div className='flex flex-col items-center gap-1 '>
-					<Button asChild>
-						{isLive ? (
-							<Link
-								href='https://twitch.tv/converixgaming'
-								target='_blank'
-							>
-								<Twitch className='mr-2' />
-								Watch Live on Twitch
-							</Link>
-						) : (
-							<Link
-								href='https://twitch.tv/converixgaming'
-								target='_blank'
-							>
-								<Twitch className='mr-2' />
-								Follow on Twitch
-							</Link>
-						)}
-					</Button>
-					{streamStartedAt
-						? (() => {
-								const start = new Date(streamStartedAt);
-								const now = new Date();
-								const diff = Math.floor(
-									(now.getTime() - start.getTime()) / 1000 / 60
-								);
-								return (
-									<span className='text-xs text-gray-500'>
-										Been live for {diff} minutes
-									</span>
-								);
-						  })()
-						: ''}
-				</div>
-
-				{isLive && (
-					<div className='flex flex-col items-center p-4 rounded-lg gap-2'>
-						<p className='text-sm'>
-							Live
-							<span className='text-red-500 underline bold'>
-								{' '}
-								NOW
-							</span> playing <b>{streamGame}</b>!
-						</p>
-						<p className='text-sm'>{streamTitle}</p>
-					</div>
-				)}
+				<TwitchStatus />
 			</section>
 
 			{/* About Section */}
