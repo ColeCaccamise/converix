@@ -30,6 +30,7 @@ interface StreamResponse {
 
 export async function GET(request: Request) {
 	console.log('checking stream status');
+	console.log('request url:', request.url);
 	const headersList = headers();
 	const host = headersList.get('host') || '';
 	console.log('host:', host);
