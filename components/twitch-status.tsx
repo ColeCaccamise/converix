@@ -1,24 +1,11 @@
-'use client';
-
-import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Twitch } from 'lucide-react';
 import Link from 'next/link';
-
-interface TwitchAuthResponse {
-	access_token: string;
-	expires_in: number;
-	token_type: string;
-}
 
 interface TwitchStream {
 	title: string;
 	game_name: string;
 	started_at: string;
-}
-
-interface StreamResponse {
-	data: TwitchStream[];
 }
 
 interface StreamData {
@@ -30,65 +17,10 @@ interface StreamData {
 	} | null;
 }
 
-export default function TwitchStatus() {
-	const [streamData, setStreamData] = useState<StreamData | null>(null);
-	const [loading, setLoading] = useState(true);
+export default async function TwitchStatus() {
+	const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/twitch`);
+	const streamData = await response.json();
 
-	useEffect(() => {
-		const fetchStreamStatus = async () => {
-			try {
-				// get oauth token
-				const authResponse = await fetch('https://id.twitch.tv/oauth2/token', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/x-www-form-urlencoded'
-					},
-					body: new URLSearchParams({
-						client_id: process.env.NEXT_PUBLIC_TWITCH_CLIENT_ID!,
-						client_secret: process.env.NEXT_PUBLIC_TWITCH_CLIENT_SECRET!,
-						grant_type: 'client_credentials'
-					})
-				});
-
-				if (!authResponse.ok) {
-					throw new Error('Failed to get Twitch auth token');
-				}
-
-				const authData = (await authResponse.json()) as TwitchAuthResponse;
-
-				// check if streamer is live
-				const streamResponse = await fetch(
-					'https://api.twitch.tv/helix/streams?user_login=converixgaming',
-					{
-						headers: {
-							Authorization: `Bearer ${authData.access_token}`,
-							'Client-Id': process.env.NEXT_PUBLIC_TWITCH_CLIENT_ID!
-						}
-					}
-				);
-
-				if (!streamResponse.ok) {
-					throw new Error('Failed to fetch stream data');
-				}
-
-				const streamData = (await streamResponse.json()) as StreamResponse;
-				const isLive = streamData.data.length > 0;
-
-				setStreamData({
-					isLive,
-					streamInfo: isLive ? streamData.data[0] : null
-				});
-			} catch (error) {
-				console.error('error checking twitch stream status:', error);
-			} finally {
-				setLoading(false);
-			}
-		};
-
-		fetchStreamStatus();
-	}, []);
-
-	if (loading) return <div>Loading...</div>;
 	if (!streamData) return null;
 
 	const { isLive, streamInfo } = streamData;
