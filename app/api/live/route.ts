@@ -1,5 +1,6 @@
 // app/api/twitch/route.ts
 import { NextResponse } from 'next/server';
+import { headers } from 'next/headers';
 
 interface TwitchAuthResponse {
 	access_token: string;
@@ -29,7 +30,10 @@ interface StreamResponse {
 
 export async function GET(request: Request) {
 	console.log('checking stream status');
-	console.log('request', request);
+	const headersList = headers();
+	const host = headersList.get('host') || '';
+	console.log('host:', host);
+
 	const username = 'converixgaming';
 
 	if (!username) {
