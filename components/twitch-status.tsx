@@ -2,21 +2,6 @@ import { Button } from '@/components/ui/button';
 import { Twitch } from 'lucide-react';
 import Link from 'next/link';
 
-interface TwitchStream {
-	title: string;
-	game_name: string;
-	started_at: string;
-}
-
-interface StreamData {
-	isLive: boolean;
-	streamInfo: {
-		title: string;
-		game_name: string;
-		started_at: string;
-	} | null;
-}
-
 export default async function TwitchStatus() {
 	const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/twitch`);
 	const streamData = await response.json();

@@ -14,6 +14,7 @@ export async function GET() {
 		return NextResponse.json(data);
 	} catch (error) {
 		// return error response
+		console.error(error);
 		return NextResponse.json(
 			{ error: 'failed to fetch stream data' },
 			{ status: 500 }
