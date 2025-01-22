@@ -3,9 +3,11 @@ import { Twitch } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function TwitchStatus() {
-	const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/twitch`);
+	const response = await fetch(
+		`https://api.colecaccamise.com/twitch/converixgaming`
+	);
 	const streamData = await response.json();
-
+	console.log(streamData);
 	if (!streamData) return null;
 
 	const { isLive, streamInfo } = streamData;
