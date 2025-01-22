@@ -38,12 +38,12 @@ export default async function Home() {
 	const isLive = liveData.isLive;
 	const streamInfo = liveData.streamInfo;
 	const streamTitle = streamInfo?.title;
-	const streamThumbnail = streamInfo?.thumbnail_url;
+	// const streamThumbnail = streamInfo?.thumbnail_url;
 	const streamStartedAt = streamInfo?.started_at;
-	const streamViewerCount = streamInfo?.viewer_count;
-	const streamLanguage = streamInfo?.language;
+	// const streamViewerCount = streamInfo?.viewer_count;
+	// const streamLanguage = streamInfo?.language;
 	const streamGame = streamInfo?.game_name;
-	const streamTags = streamInfo?.tags;
+	// const streamTags = streamInfo?.tags;
 
 	return (
 		<div className='min-h-screen bg-black text-white'>
@@ -82,29 +82,45 @@ export default async function Home() {
 				<h1 className='text-5xl font-bold mb-6'>ConveriX Gaming</h1>
 				<p className='text-xl mb-8'>Your go-to channel for sports and gaming</p>
 
-				<Button asChild>
-					{isLive ? (
-						<Link
-							href='https://twitch.tv/converixgaming'
-							target='_blank'
-						>
-							<Twitch className='mr-2' />
-							Watch Live on Twitch
-						</Link>
-					) : (
-						<Link
-							href='https://twitch.tv/converixgaming'
-							target='_blank'
-						>
-							<Twitch className='mr-2' />
-							Follow on Twitch
-						</Link>
-					)}
-				</Button>
+				<div className='flex flex-col items-center gap-1 '>
+					<Button asChild>
+						{isLive ? (
+							<Link
+								href='https://twitch.tv/converixgaming'
+								target='_blank'
+							>
+								<Twitch className='mr-2' />
+								Watch Live on Twitch
+							</Link>
+						) : (
+							<Link
+								href='https://twitch.tv/converixgaming'
+								target='_blank'
+							>
+								<Twitch className='mr-2' />
+								Follow on Twitch
+							</Link>
+						)}
+					</Button>
+					{streamStartedAt
+						? (() => {
+								const start = new Date(streamStartedAt);
+								const now = new Date();
+								const diff = Math.floor(
+									(now.getTime() - start.getTime()) / 1000 / 60
+								);
+								return (
+									<span className='text-xs text-gray-500'>
+										Been live for {diff} minutes
+									</span>
+								);
+						  })()
+						: ''}
+				</div>
 
 				{isLive && (
 					<div className='flex flex-col items-center p-4 rounded-lg gap-2'>
-						<p className=' uppercase'>
+						<p className='text-sm'>
 							Live
 							<span className='text-red-500 underline bold'>
 								{' '}
