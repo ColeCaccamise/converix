@@ -28,6 +28,8 @@ interface StreamResponse {
 }
 
 export async function GET(request: Request) {
+	console.log('checking stream status');
+	console.log('request', request);
 	const username = 'converixgaming';
 
 	if (!username) {
