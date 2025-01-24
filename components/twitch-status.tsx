@@ -4,10 +4,12 @@ import Link from 'next/link';
 
 export default async function TwitchStatus() {
 	const response = await fetch(
-		`https://api.colecaccamise.com/twitch/converixgaming`
+		`https://api.colecaccamise.com/twitch/converixgaming`,
+		{ cache: 'no-store' } // disable caching to get fresh data
 	);
 	const streamData = await response.json();
-	console.log(streamData);
+	// log data for debugging
+	console.log('stream data:', streamData);
 	if (!streamData) return null;
 
 	const { isLive, streamInfo } = streamData;
