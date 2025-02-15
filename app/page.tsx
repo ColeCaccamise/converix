@@ -71,7 +71,7 @@ export default async function Home() {
 					</p>
 					<div className='flex flex-col gap-4'>
 						<div className='bg-white text-black p-4 rounded w-full'>
-							<h3 className='font-bold'>Monday-Saturday</h3>
+							<h3 className='font-bold'>Tuesday-Saturday</h3>
 							<p>Times TBD</p>
 							<p>CUT, MUT, and other games</p>
 						</div>
