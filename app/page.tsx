@@ -75,6 +75,9 @@ export default async function Home() {
 							<p>Times TBD</p>
 							<p>CUT, MUT, and other games</p>
 						</div>
+						<p className='text-sm'>
+							Note: No stream Wednesday 2/19. Back on Thursday 2/20.
+						</p>
 						<div className='bg-white text-black p-4 rounded w-full'>
 							<h3 className='font-bold'>Sunday and Monday</h3>
 							<p>OFF</p>
