@@ -4,7 +4,7 @@ import TwitchStatus from '@/components/twitch-status';
 
 export default async function Home() {
 	return (
-		<div className='min-h-screen bg-black text-white'>
+		<div className='w-full flex flex-col flex-grow bg-black text-white'>
 			{/* Header */}
 			<header className='container mx-auto px-4 py-6 flex justify-between items-center'>
 				<Link
@@ -52,7 +52,7 @@ export default async function Home() {
 					<h2 className='text-3xl font-bold mb-6'>About ConveriX</h2>
 					<p className='text-lg'>
 						ConveriX Gaming is a twitch streamer and Buffalo Bills fanatic. He
-						streams College Football, Madden, and other games from time to time.
+						streams Madden, Fortnite, Marvel Rivals, and other games from time to time.
 						#RiseAndGrind
 					</p>
 				</div>
@@ -73,11 +73,8 @@ export default async function Home() {
 						<div className='bg-white text-black p-4 rounded w-full'>
 							<h3 className='font-bold'>Tuesday-Saturday</h3>
 							<p>Times TBD</p>
-							<p>CUT, MUT, and other games</p>
+							<p>MUT, Fortnite, Marvel Rivals, and other games</p>
 						</div>
-						<p className='text-sm'>
-							Note: No stream Wednesday 2/19. Back on Thursday 2/20.
-						</p>
 						<div className='bg-white text-black p-4 rounded w-full'>
 							<h3 className='font-bold'>Sunday and Monday</h3>
 							<p>OFF</p>
